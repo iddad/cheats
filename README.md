@@ -1,16 +1,49 @@
 
-# Windows: synchronize two directories
+## Linux: split a large file into chunks
+
+```
+# Split
+split -b 500000k 'My video.mpg' video
+
+# Bring parts together:
+cat video.?? > 'My video.mpg'
+```
+
+## MacOS: convert pllist file from binary to xml.
+```
+plutil -convert xml1 file.plist
+```
+
+## ffmpeg
+
+### Cut / Extract a part of a MP4 video or MP3 audio file
+Set `-vcodec copy` and `-acodec copy` to avoid reencoding (keep it fast, same quality).
+```
+# -i   input file (the large one)
+# -ss  start time
+# -t   duration
+ffmpeg -i GOPR0678.MP4  -ss 00:00:00.0 -t 00:01:55.0 -vcodec copy -acodec copy OUTPUT_FILE.MP4
+```
+
+### Extract the music from a video file
+Example here with a MKV file containing a MP3 audio track.
+```
+# Extract 43 seconds of audio, starting at 2min53s.
+ffmpeg -i MY_VIDEO.x265.HEVC-QC.mkv -f mp3 -vn -ss 00:02:53 -t 00:00:43 Main-theme.mp3
+```
+
+## Windows: synchronize two directories
 The easiest way seems to use rsync as it also works on Linux and macOS.
 Rsync doesn't exist as a standalone on Windows so we'll use a busybox.
 
-## Install Rsync on Windows
+### Install Rsync on Windows
 * Download and install `Git Bash`: https://git-scm.com/
 * Download additional `rsync` package from the repo: http://repo.msys2.org/msys/x86_64/
 * Open the `rsync-{version}.pkg.tar.xz` package with 7Zip and extract the executable `/usr/bin/rsync.exe`
 * Copy the executable `rsync.exe` to `C:\Program Files\Git\usr\bin\`
 * Test it: open a Git Bash terminal and type `rsync`
 
-## Synchronize two directories
+### Synchronize two directories
 ```bash
 # Synchronize two directories using rsync
 # flags:
