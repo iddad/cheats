@@ -9,6 +9,21 @@ split -b 500000k 'My video.mpg' video
 cat video.?? > 'My video.mpg'
 ```
 
+## Rename a bunch of screenshots to an ordered list
+Rename a bunch of files using a prefix and an index. Here a list of VLC snapshots taken from a GOPRO recording, I want my snapshots to be renamed GOPR1221-`0001`.png, GOPR1221-`0002`.png, ...)
+```
+i=1; for file in vlcsnap-2016-12-13-*.png; do NEW_FILE_NAME=$(printf "GOPR1221-%04d.png" "$i"); mv "$file" "$NEW_FILE_NAME"; let i=i+1; done
+```
+
+## Create an SSH private/public key for auto authentication
+```
+cd ~
+mkdir .ssh
+cd .ssh
+# -P : protect your key using your password here, leave it empty for no password
+ssh-keygen -b 1024 -t rsa -f id_rsa -P ""
+```
+
 ## MacOS: convert pllist file from binary to xml.
 ```
 plutil -convert xml1 file.plist
