@@ -47,6 +47,20 @@ Example here with a MKV file containing a MP3 audio track.
 ffmpeg -i MY_VIDEO.x265.HEVC-QC.mkv -f mp3 -vn -ss 00:02:53 -t 00:00:43 Main-theme.mp3
 ```
 
+## macOS and DMG image files
+
+### Check DMG file encryption
+```
+hdiutil isencrypted file.dmg
+hdiutil imageinfo file.dmg
+```
+
+### Resize a (protected) DMG file:
+```
+# Here '80m'
+hdiutil resize -size 80m test-encrypt.dmg
+```
+
 ## Windows: synchronize two directories
 The easiest way seems to use rsync as it also works on Linux and macOS.
 Rsync doesn't exist as a standalone on Windows so we'll use a busybox.
